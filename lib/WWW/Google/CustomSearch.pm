@@ -58,11 +58,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
 
@@ -167,8 +167,8 @@ specified, cx is used.
 
 type 'Language'     => where { exists($LANGUAGE->{lc($_)}) };
 type 'ZeroOrOne'    => where { (/^[1|0]$/) }; 
-type 'StartIndex'   => where { (/^\d+$/) && ($_>=1) && ($_<=91) }; 
-type 'ResultCount'  => where { (/^\d+$/) && ($_>=1) && ($_<=10) }; 
+type 'StartIndex'   => where { (/^\d{1,2}$/) && ($_>=1) && ($_<=91) }; 
+type 'ResultCount'  => where { (/^\d{1,2}$/) && ($_>=1) && ($_<=10) }; 
 type 'SafetyLevel'  => where { /\bhigh\b|\bmedium\b|\boff\b/i };
 type 'OutputFormat' => where { /\bjson\b|\batom\b/i  };
 type 'TrueFalse'    => where { /\btrue\b|\bfalse\b/i };
