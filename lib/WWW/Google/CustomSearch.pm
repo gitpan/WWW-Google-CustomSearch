@@ -58,11 +58,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
 
@@ -166,21 +166,22 @@ specified, cx is used.
 =cut
 
 type 'Language'     => where { exists($LANGUAGE->{lc($_)}) };
-type 'StartIndex'   => where { ($_ =~ /^\d+$/) && ($_>=1) && ($_<=91) }; 
-type 'ResultCount'  => where { ($_ =~ /^\d+$/) && ($_>=1) && ($_<=10) }; 
-type 'SafetyLevel'  => where { $_ =~ /\bhigh\b|\bmedium\b|\boff\b/i };
-type 'OutputFormat' => where { $_ =~ m(^\bjson\b|\batom\b$)i };
-type 'TrueFalse'    => where { defined($_) && ($_ =~ m(^\btrue\b|\bfalse\b$)i) };
+type 'ZeroOrOne'    => where { (/^[1|0]$/) }; 
+type 'StartIndex'   => where { (/^\d+$/) && ($_>=1) && ($_<=91) }; 
+type 'ResultCount'  => where { (/^\d+$/) && ($_>=1) && ($_<=10) }; 
+type 'SafetyLevel'  => where { /\bhigh\b|\bmedium\b|\boff\b/i };
+type 'OutputFormat' => where { /\bjson\b|\batom\b/i  };
+type 'TrueFalse'    => where { /\btrue\b|\bfalse\b/i };
 has  'api_key'      => (is => 'ro', isa => 'Str', required => 1);
 has  'cx'           => (is => 'ro', isa => 'Str');
 has  'cref'         => (is => 'ro', isa => 'Str');
-has  'prettyprint'  => (is => 'ro', isa => 'TrueFalse',      default => 'true');
-has  'alt'          => (is => 'ro', isa => 'OutputFormat',   default => 'json');
-has  'lr'           => (is => 'ro', isa => 'Language',       default => 'lang_en');
-has  'num'          => (is => 'ro', isa => 'ResultCount',    default => 10);
-has  'start'        => (is => 'ro', isa => 'StartIndex',     default => 1);
-has  'safe'         => (is => 'ro', isa => 'SafetyLevel',    default => 'off');
-has  'filter'       => (is => 'ro', isa => 'Bool',           default => 1);
+has  'prettyprint'  => (is => 'ro', isa => 'TrueFalse');
+has  'alt'          => (is => 'ro', isa => 'OutputFormat');
+has  'lr'           => (is => 'ro', isa => 'Language');
+has  'num'          => (is => 'ro', isa => 'ResultCount');
+has  'start'        => (is => 'ro', isa => 'StartIndex');
+has  'safe'         => (is => 'ro', isa => 'SafetyLevel');
+has  'filter'       => (is => 'ro', isa => 'ZeroOrOne');
 has  'browser'      => (is => 'rw', isa => 'LWP::UserAgent', default => sub { return LWP::UserAgent->new(); });
 
 around BUILDARGS => sub
@@ -244,13 +245,13 @@ sub search
     {
         $url .= sprintf("&cref=%s", $self->cref);
     }
-    $url .= sprintf("&prettyprint=%s", $self->prettyprint);
-    $url .= sprintf("&alt=%s",    $self->alt);
-    $url .= sprintf("&lr=%s",     $self->lr);
-    $url .= sprintf("&safe=%s",   $self->safe);
-    $url .= sprintf("&num=%d",    $self->num);
-    $url .= sprintf("&start=%d",  $self->start);
-    $url .= sprintf("&filter=%d", $self->filter);
+    $url .= sprintf("&prettyprint=%s", $self->prettyprint) if $self->prettyprint;
+    $url .= sprintf("&alt=%s",    $self->alt)    if $self->alt;
+    $url .= sprintf("&lr=%s",     $self->lr)     if $self->lr;
+    $url .= sprintf("&safe=%s",   $self->safe)   if $self->safe;
+    $url .= sprintf("&num=%d",    $self->num)    if $self->num;
+    $url .= sprintf("&start=%d",  $self->start)  if $self->start;
+    $url .= sprintf("&filter=%d", $self->filter) if $self->filter;
     $url .= sprintf("&q=%s",      $query);
     
     $request  = HTTP::Request->new(GET => $url);
@@ -319,5 +320,6 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 
 __PACKAGE__->meta->make_immutable;
 no Moose; # Keywords are removed from the WWW::Google::CustomSearch package
+#no Moose::Util::TypeConstraints;
 
 1; # End of WWW::Google::CustomSearch

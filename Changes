@@ -1,5 +1,8 @@
 Revision history for WWW-Google-CustomSearch
 
+0.03    Mon Sep 12 14:15:16 2011
+        - Handle default settings correctly.
+
 0.02    Mon Aug 08 12:44:11 2011
         - Made Readonly v1.03 as minimum requirement.
         - Prepared the distribution using the Module::Signature v0.68.
