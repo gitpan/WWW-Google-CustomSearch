@@ -1,5 +1,8 @@
 Revision history for WWW-Google-CustomSearch
 
+0.05    Tue Nov 15 11:12:13 2011
+        - Fixed the issued raised by WILLERT (RT: 72417).
+
 0.04    Mon Sep 12 17:18:19 2011
         - Fixed the checking of fields 'num' and 'start'.
         - Added unit test to keep an eye.

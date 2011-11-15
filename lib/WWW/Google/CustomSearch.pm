@@ -58,11 +58,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
 
@@ -251,7 +251,8 @@ sub search
     $url .= sprintf("&safe=%s",   $self->safe)   if $self->safe;
     $url .= sprintf("&num=%d",    $self->num)    if $self->num;
     $url .= sprintf("&start=%d",  $self->start)  if $self->start;
-    $url .= sprintf("&filter=%d", $self->filter) if $self->filter;
+    # RT:72417 by WILLERT.
+    $url .= sprintf("&filter=%d", $self->filter) if defined $self->filter;
     $url .= sprintf("&q=%s",      $query);
     
     $request  = HTTP::Request->new(GET => $url);
@@ -320,6 +321,6 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 
 __PACKAGE__->meta->make_immutable;
 no Moose; # Keywords are removed from the WWW::Google::CustomSearch package
-#no Moose::Util::TypeConstraints;
+no Moose::Util::TypeConstraints;
 
 1; # End of WWW::Google::CustomSearch
