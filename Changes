@@ -1,5 +1,8 @@
 Revision history for WWW-Google-CustomSearch
 
+0.06    Wed May 02 11:15:00 2012
+        - Updated pod about how the query parameters can be specified.
+
 0.05    Tue Nov 15 11:12:13 2011
         - Fixed the issued raised by WILLERT (RT: 72417).
 

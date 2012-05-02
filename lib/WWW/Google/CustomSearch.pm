@@ -58,11 +58,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =cut
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
 
@@ -222,8 +222,16 @@ Get search result for the given query.
     
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new($api_key, $cx);
-    print Dumper($engine->search('Google'));
+
+    # Most recommended format to use key, value as mentioned below format which  gives
+    # flexibility to play with query parameters.
+    my $engine1 = WWW::Google::CustomSearch->new(api_key=>$api_key, cx=>$cx, start=>2);
+    print Dumper($engine1->search('Google'));
+
+    # NOTE: If you intend to use default settings  for  search engine created with the 
+    # Google Custom Search then use this format.
+    my $engine2 = WWW::Google::CustomSearch->new($api_key, $cx);
+    print Dumper($engine2->search('Google'));
 
 =cut
 

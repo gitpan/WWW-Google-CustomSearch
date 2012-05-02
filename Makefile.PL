@@ -8,6 +8,7 @@ WriteMakefile(
     ABSTRACT_FROM => 'lib/WWW/Google/CustomSearch.pm',
     dist          => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean         => { FILES => 'WWW-Google-CustomSearch-*' },
+    SIGN          => 1,
     PREREQ_PM     => {
         'Test::More'  => 0,
         'Readonly'    => '1.03',
