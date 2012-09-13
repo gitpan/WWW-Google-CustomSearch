@@ -7,8 +7,10 @@ use namespace::clean;
 
 use Carp;
 use Data::Dumper;
+use WWW::Google::CustomSearch::Result;
 
 use JSON;
+use XML::Simple;
 use Readonly;
 use HTTP::Request;
 use LWP::UserAgent;
@@ -58,11 +60,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.06
+Version 0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
 
@@ -70,14 +72,14 @@ Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSIO
 
 This module is intended for anyone who wants to write applications that can interact with  the
 JSON/Atom Custom Search API. With Google Custom Search, you can harness the power of Google to
-create a  customized  search experience for your own website. You can use the JSON/Atom Custom 
+create a  customized  search experience for your own website. You can use the JSON/Atom Custom
 Search API to retrieve Google Custom Search results programmatically.
 
-The  JSON / Atom Custom Search API  requires the use of an API key, which you can get from the 
+The  JSON / Atom Custom Search API  requires the use of an API key, which you can get from the
 Google APIs  console.  The API provides 100 search queries per day for free. If you need more,
-you may sign up for billing in the console. 
+you may sign up for billing in the console.
 
-Important:The version v1 of the Google JSON/Atom Custom Search API is in Labs and its features 
+Important:The version v1 of the Google JSON/Atom Custom Search API is in Labs and its features
 might change unexpectedly until it graduates.
 
 =head1 LANGUAGES (lr)
@@ -85,7 +87,7 @@ might change unexpectedly until it graduates.
     +----------------------+------------+
     | Language             | Value      |
     +----------------------+------------+
-    | Arabic               | lang_ar    | 
+    | Arabic               | lang_ar    |
     | Bulgarian            | lang_bg    |
     | Catalan              | lang_ca    |
     | Chinese (Simplified) | lang_zh-CN |
@@ -106,7 +108,7 @@ might change unexpectedly until it graduates.
     | Indonesian           | lang_id    |
     | Italian              | lang_it    |
     | Japanese             | lang_ja    |
-    | Korean               | lang_ko    | 
+    | Korean               | lang_ko    |
     | Latvian              | lang_lv    |
     | Lithuanian           | lang_lt    |
     | Norwegian            | lang_no    |
@@ -125,13 +127,13 @@ might change unexpectedly until it graduates.
 =head1 CONSTRUCTOR
 
 The constructor expects your application API Key & Custom search engine identifier. Use either
-cx  or  cref  to specify the custom search engine you want to perform this search. If both are 
+cx  or  cref  to specify the custom search engine you want to perform this search. If both are
 specified, cx is used.
 
     +-------------+------------------------------------------------------------------+
     | Key         | Description                                                      |
     +-------------+------------------------------------------------------------------+
-    | api_key     | Your application API Key.                                        | 
+    | api_key     | Your application API Key.                                        |
     |             |                                                                  |
     | alt         | Alternative data representation format. If you don't specify an  |
     |             | alt parameter, the API returns data in the JSON format. This is  |
@@ -146,7 +148,7 @@ specified, cx is used.
     | num         | Number of search results to return. Valid values are integers    |
     |             | between 1 and 10, Default is 10.                                 |
     |             |                                                                  |
-    | prettyprint | Returns a response with indentations and line breaks.            |  
+    | prettyprint | Returns a response with indentations and line breaks.            |
     |             | If prettyprint=true, the results returned by the server will be  |
     |             | human readable (pretty printed).                                 |
     |             |                                                                  |
@@ -160,23 +162,22 @@ specified, cx is used.
     |             |                                                                  |
     | filter      | Controls turning on or off the duplicate content filter.         |
     |             | * filter=0 - Turns off the duplicate content filter.             |
-    |             | * filter=1 - Turns on the duplicate content filter (default).    |  
+    |             | * filter=1 - Turns on the duplicate content filter (default).    |
     +-------------+------------------------------------------------------------------+
 
 =cut
 
 type 'Language'     => where { exists($LANGUAGE->{lc($_)}) };
-type 'ZeroOrOne'    => where { (/^[1|0]$/) }; 
-type 'StartIndex'   => where { (/^\d{1,2}$/) && ($_>=1) && ($_<=91) }; 
-type 'ResultCount'  => where { (/^\d{1,2}$/) && ($_>=1) && ($_<=10) }; 
-type 'SafetyLevel'  => where { /\bhigh\b|\bmedium\b|\boff\b/i };
+type 'ZeroOrOne'    => where { (/^[1|0]$/) };
+type 'StartIndex'   => where { (/^\d{1,2}$/) && ($_>=1) && ($_<=91) };
+type 'ResultCount'  => where { (/^\d{1,2}$/) && ($_>=1) && ($_<=10) };
 type 'OutputFormat' => where { /\bjson\b|\batom\b/i  };
 type 'TrueFalse'    => where { /\btrue\b|\bfalse\b/i };
 has  'api_key'      => (is => 'ro', isa => 'Str', required => 1);
 has  'cx'           => (is => 'ro', isa => 'Str');
 has  'cref'         => (is => 'ro', isa => 'Str');
 has  'prettyprint'  => (is => 'ro', isa => 'TrueFalse');
-has  'alt'          => (is => 'ro', isa => 'OutputFormat');
+has  'alt'          => (is => 'ro', isa => 'OutputFormat', default => 'json');
 has  'lr'           => (is => 'ro', isa => 'Language');
 has  'num'          => (is => 'ro', isa => 'ResultCount');
 has  'start'        => (is => 'ro', isa => 'StartIndex');
@@ -203,7 +204,7 @@ around BUILDARGS => sub
     }
 };
 
-sub BUILD 
+sub BUILD
 {
   my $self = shift;
   croak("ERROR: cx or cref must be specified.\n")
@@ -214,24 +215,24 @@ sub BUILD
 
 =head2 search()
 
-Get search result for the given query.
+Get search result L<WWW::Google::CustomSearch::Result> for the given query,  which can be used
+to probe for further information about the search result.
 
     use strict; use warnings;
-    use Data::Dumper;
     use WWW::Google::CustomSearch;
-    
+
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
 
     # Most recommended format to use key, value as mentioned below format which  gives
     # flexibility to play with query parameters.
     my $engine1 = WWW::Google::CustomSearch->new(api_key=>$api_key, cx=>$cx, start=>2);
-    print Dumper($engine1->search('Google'));
+    my $result1 = $engine1->search('Google');
 
-    # NOTE: If you intend to use default settings  for  search engine created with the 
+    # NOTE: If you intend to use default settings  for  search engine created with the
     # Google Custom Search then use this format.
     my $engine2 = WWW::Google::CustomSearch->new($api_key, $cx);
-    print Dumper($engine2->search('Google'));
+    my $result2 = $engine2->search('Google');
 
 =cut
 
@@ -241,7 +242,7 @@ sub search
     my ($query) = pos_validated_list(\@_,
                   { isa => 'Str', required => 1 },
                   MX_PARAMS_VALIDATE_NO_CACHE => 1);
-                  
+
     my ($browser, $url, $request, $response, $content);
     $browser  = $self->browser;
     $url      = sprintf("%s?key=%s", $BASE_URL, $self->api_key);
@@ -262,15 +263,20 @@ sub search
     # RT:72417 by WILLERT.
     $url .= sprintf("&filter=%d", $self->filter) if defined $self->filter;
     $url .= sprintf("&q=%s",      $query);
-    
+
     $request  = HTTP::Request->new(GET => $url);
     $response = $browser->request($request);
     croak("ERROR: Couldn't fetch data [$url]:[".$response->status_line."]\n")
         unless $response->is_success;
     $content  = $response->content;
     croak("ERROR: No data found.\n") unless defined $content;
-    return from_json($content) if ($self->alt =~ /json/i);                  
-    return $content;
+
+    if (defined $self->alt && ($self->alt =~ /atom/i)) {
+        $content = XMLin($content);
+    } else {
+        $content = from_json($content);
+    }
+    return WWW::Google::CustomSearch::Result->new(raw => $content, api_key => $self->api_key);
 }
 
 =head1 AUTHOR
