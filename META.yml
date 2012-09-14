@@ -11,6 +11,7 @@ build_requires:
   MooseX::Params::Validate: 0.16
   Readonly: 1.03
   Test::More: 0
+  XML::Simple: 2.18
   namespace::clean: 0.20
 configure_requires:
   Module::Build: 0.40
@@ -24,19 +25,19 @@ name: WWW-Google-CustomSearch
 provides:
   WWW::Google::CustomSearch:
     file: lib/WWW/Google/CustomSearch.pm
-    version: 0.07
+    version: 0.08
   WWW::Google::CustomSearch::Item:
     file: lib/WWW/Google/CustomSearch/Item.pm
-    version: 0.07
+    version: 0.08
   WWW::Google::CustomSearch::Page:
     file: lib/WWW/Google/CustomSearch/Page.pm
-    version: 0.07
+    version: 0.08
   WWW::Google::CustomSearch::Request:
     file: lib/WWW/Google/CustomSearch/Request.pm
-    version: 0.07
+    version: 0.08
   WWW::Google::CustomSearch::Result:
     file: lib/WWW/Google/CustomSearch/Result.pm
-    version: 0.07
+    version: 0.08
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.07
+version: 0.08

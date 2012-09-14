@@ -13,11 +13,11 @@ WWW::Google::CustomSearch::Page - Placeholder for Google JSON/Atom Custom Search
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 type 'SafetyLevel'    => where { /\bhigh\b|\bmedium\b|\boff\b/i };
 has  'api_key'        => (is => 'ro', isa => 'Str', required => 1);
@@ -116,7 +116,7 @@ Returns the 'totalResults' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $page    = $result->nextPage;
     print "Total Results: ", $page->totalResults, "\n";
@@ -130,7 +130,7 @@ Returns the 'inputEncoding' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $page    = $result->nextPage;
     print "Input Encoding: ", $page->inputEncoding, "\n";
@@ -144,7 +144,7 @@ Returns the 'outputEncoding' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $page    = $result->nextPage;
     print "Output Encoding: ", $page->outputEncoding, "\n";
@@ -159,7 +159,7 @@ object.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $page    = $result->nextPage;
     my $next    = $page->fetch;

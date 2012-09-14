@@ -12,11 +12,11 @@ WWW::Google::CustomSearch::Request - Placeholder for Google JSON/Atom Custom Sea
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 has 'page'    => (is => 'ro', isa => 'WWW::Google::CustomSearch::Page');
 has 'api_key' => (is => 'ro', isa => 'Str', required => 1);
 
@@ -44,7 +44,7 @@ search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $page    = $result->request;
     my $another = $page->fetch;

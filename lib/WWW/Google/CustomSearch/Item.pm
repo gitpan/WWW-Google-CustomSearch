@@ -11,11 +11,11 @@ WWW::Google::CustomSearch::Item - Placeholder for Google JSON/Atom Custom Search
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 has 'kind'             => (is => 'ro', isa => 'Str');
 has 'link'             => (is => 'ro', isa => 'Str');
@@ -41,7 +41,7 @@ Returns the 'kind' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item Kind: ", $item->kind, "\n" if defined $item->kind;
@@ -56,7 +56,7 @@ Returns the 'link' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item Link: ", $item->link, "\n" if defined $item->link;
@@ -71,7 +71,7 @@ Returns the 'displayLink' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item Display Link: ", $item->displayLink, "\n" if defined $item->displayLink;
@@ -86,7 +86,7 @@ Returns the 'snippet' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item Snippet: ", $item->snippet, "\n" if defined $item->snippet;
@@ -101,7 +101,7 @@ Returns the 'htmlSnippet' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item HTML Snippet: ", $item->htmlSnippet, "\n" if defined $item->htmlSnippet;
@@ -116,7 +116,7 @@ Returns the 'cacheId' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item Cache Id: ", $item->cacheId, "\n" if defined $item->cacheId;
@@ -131,7 +131,7 @@ Returns the 'formattedUrl' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item Formatted URL: ", $item->formattedUrl, "\n" if defined $item->formattedUrl;
@@ -146,7 +146,7 @@ Returns the 'htmlFormattedUrl' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item HTML Formatted URL: ", $item->htmlFormattedUrl, "\n" if defined $item->htmlFormattedUrl;
@@ -161,7 +161,7 @@ Returns the 'title' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item Title: ", $item->title, "\n" if defined $item->title;
@@ -176,7 +176,7 @@ Returns the 'htmlTitle' attribute of the search.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     foreach my $item ($result->items) {
         print "Item HTML Title: ", $item->htmlTitle, "\n" if defined $item->htmlTitle;

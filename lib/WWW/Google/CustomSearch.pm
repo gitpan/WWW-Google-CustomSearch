@@ -60,11 +60,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
 

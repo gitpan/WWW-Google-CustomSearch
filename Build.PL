@@ -13,6 +13,7 @@ my $builder = Module::Build->new(
         'Readonly'    => '1.03',
         'Moose'       => '2.0006',
         'JSON'        => '2.15',
+        'XML::Simple' => '2.18',
         'HTTP::Request'    => '1.40',
         'LWP::UserAgent'   => '2.33',
         'namespace::clean' => '0.20',

@@ -14,11 +14,11 @@ WWW::Google::CustomSearch::Result - Placeholder for Google JSON/Atom Custom Sear
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 has 'api_key' => (is => 'ro', isa => 'Str',     required => 1);
 has 'raw'     => (is => 'ro', isa => 'HashRef', required => 1);
@@ -54,7 +54,7 @@ sub BUILD
 
     if (defined $raw->{'queries'}->{'nextPage'} && (scalar(@{$raw->{'queries'}->{'nextPage'}}))) {
         $raw->{'queries'}->{'nextPage'}->[0]->{'api_key'} = $self->api_key;
-        $self->{'nextPage'}     = WWW::Google::CustomSearch::Page->new($raw->{'queries'}->{'nextPage'}->[0]);
+        $self->{'nextPage'} = WWW::Google::CustomSearch::Page->new($raw->{'queries'}->{'nextPage'}->[0]);
     }
 
     if (defined $raw->{'queries'}->{'previousPage'} && (scalar(@{$raw->{'queries'}->{'previousPage'}}))) {
@@ -82,7 +82,7 @@ Returns the 'kind' attribute of the search result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     print "Kind: ", $result->kind, "\n";
 
@@ -95,7 +95,7 @@ Returns the 'formattedTotalResults' attribute of the search result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     print "Formatted Total Results: ", $result->formattedTotalResults, "\n";
 
@@ -108,7 +108,7 @@ Returns the 'formattedSearchTime' attribute of the search result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     print "Formatted Search Time: ", $result->formattedSearchTime, "\n";
 
@@ -121,7 +121,7 @@ Returns the 'totalResults' attribute of the search result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     print "Total Results: ", $result->totalResults, "\n";
 
@@ -134,7 +134,7 @@ Returns the 'searchTime' attribute of the search result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     print "Search Time: ", $result->searchTime, "\n";
 
@@ -147,7 +147,7 @@ Returns the URL template attribute of the search result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     print "URL Template: ", $result->url_template, "\n";
 
@@ -160,7 +160,7 @@ Returns the URL Type attribute of the search result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     print "URL Type: ", $result->url_type, "\n";
 
@@ -173,7 +173,7 @@ Returns the request L<WWW::Google::CustomSearch::Request> object used in the las
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $request = $result->request;
 
@@ -187,7 +187,7 @@ next page result.
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $page    = $result->nextPage;
 
@@ -199,11 +199,11 @@ the previous page result.
     use strict; use warnings;
     use WWW::Google::CustomSearch;
 
-    my $api_key  = 'Your_API_Key';
-    my $cx       = 'Search_Engine_Identifier';
-    my $engine   = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
-    my $result   = $engine->search("Google");
-    my $page     = $result->previousPage;
+    my $api_key = 'Your_API_Key';
+    my $cx      = 'Search_Engine_Identifier';
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $result  = $engine->search("Google");
+    my $page    = $result->previousPage;
 
 =head2 items()
 
@@ -214,7 +214,7 @@ Returns list of search item L<WWW::Google::CustomSearch::Item> based on the sear
 
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
-    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx, start => 2);
+    my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
     my $items   = $result->items; # ArrayRef
     my @items   = $result->items; # Array
