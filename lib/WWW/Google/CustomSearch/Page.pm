@@ -13,20 +13,20 @@ WWW::Google::CustomSearch::Page - Placeholder for Google JSON/Atom Custom Search
 
 =head1 VERSION
 
-Version 0.08
+Version 0.09
 
 =cut
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 type 'SafetyLevel'    => where { /\bhigh\b|\bmedium\b|\boff\b/i };
 has  'api_key'        => (is => 'ro', isa => 'Str', required => 1);
 has  'cx'             => (is => 'ro', isa => 'Str', required => 1);
-has  'safe'           => (is => 'ro', isa => 'SafetyLevel', required => 1);
+has  'safe'           => (is => 'ro', isa => 'SafetyLevel', default => 'off');
 has  'count'          => (is => 'ro', isa => 'Num');
 has  'searchTerms'    => (is => 'ro', isa => 'Str', required => 1);
 has  'inputEncoding'  => (is => 'ro', isa => 'Str', required => 1);
-has  'startIndex'     => (is => 'ro', isa => 'Num', required => 1);
+has  'startIndex'     => (is => 'ro', isa => 'Num', default  => 1);
 has  'title'          => (is => 'ro', isa => 'Str', required => 1);
 has  'totalResults'   => (is => 'ro', isa => 'Num', required => 1);
 has  'outputEncoding' => (is => 'ro', isa => 'Str', required => 1);

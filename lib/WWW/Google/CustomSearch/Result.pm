@@ -14,11 +14,11 @@ WWW::Google::CustomSearch::Result - Placeholder for Google JSON/Atom Custom Sear
 
 =head1 VERSION
 
-Version 0.08
+Version 0.09
 
 =cut
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 has 'api_key' => (is => 'ro', isa => 'Str',     required => 1);
 has 'raw'     => (is => 'ro', isa => 'HashRef', required => 1);
@@ -223,6 +223,7 @@ Returns list of search item L<WWW::Google::CustomSearch::Item> based on the sear
 
 sub items {
     my $self = shift;
+    return unless defined $self->{_items};
     return @{$self->{_items}} if wantarray;
     return $self->{_items};
 }

@@ -60,11 +60,12 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.08
+Version 0.09
 
 =cut
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
+
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
 
@@ -135,10 +136,6 @@ specified, cx is used.
     +-------------+------------------------------------------------------------------+
     | api_key     | Your application API Key.                                        |
     |             |                                                                  |
-    | alt         | Alternative data representation format. If you don't specify an  |
-    |             | alt parameter, the API returns data in the JSON format. This is  |
-    |             | equivalent to alt=json. Accepted values are json and atom.       |
-    |             |                                                                  |
     | cx          | For a search engine created with the Google Custom Search page.  |
     |             |                                                                  |
     | cref        | For a linked custom search engine.                               |
@@ -176,13 +173,13 @@ type 'TrueFalse'    => where { /\btrue\b|\bfalse\b/i };
 has  'api_key'      => (is => 'ro', isa => 'Str', required => 1);
 has  'cx'           => (is => 'ro', isa => 'Str');
 has  'cref'         => (is => 'ro', isa => 'Str');
-has  'prettyprint'  => (is => 'ro', isa => 'TrueFalse');
+has  'prettyprint'  => (is => 'ro', isa => 'TrueFalse',    default => 'true');
 has  'alt'          => (is => 'ro', isa => 'OutputFormat', default => 'json');
+has  'safe'         => (is => 'ro', isa => 'SafetyLevel',  default => 'off');
+has  'filter'       => (is => 'ro', isa => 'ZeroOrOne',    default => 1);
+has  'num'          => (is => 'ro', isa => 'ResultCount',  default => 10);
+has  'start'        => (is => 'ro', isa => 'StartIndex',   default => 1);
 has  'lr'           => (is => 'ro', isa => 'Language');
-has  'num'          => (is => 'ro', isa => 'ResultCount');
-has  'start'        => (is => 'ro', isa => 'StartIndex');
-has  'safe'         => (is => 'ro', isa => 'SafetyLevel');
-has  'filter'       => (is => 'ro', isa => 'ZeroOrOne');
 has  'browser'      => (is => 'rw', isa => 'LWP::UserAgent', default => sub { return LWP::UserAgent->new(); });
 
 around BUILDARGS => sub
