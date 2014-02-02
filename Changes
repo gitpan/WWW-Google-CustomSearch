@@ -1,5 +1,8 @@
 Revision history for WWW-Google-CustomSearch
 
+0.10    Sun Feb 02 17:15:10 2014
+        - Fixed the issue raised by JACINTA (RT: 92596)
+
 0.09    Fri Sep 14 08:55:10 2012
         - Fixed the warning when no items found.
         - Explicitly set the defaults.

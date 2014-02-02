@@ -11,11 +11,11 @@ WWW::Google::CustomSearch::Item - Placeholder for Google JSON/Atom Custom Search
 
 =head1 VERSION
 
-Version 0.09
+Version 0.10
 
 =cut
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 has 'kind'             => (is => 'ro', isa => 'Str');
 has 'link'             => (is => 'ro', isa => 'Str');

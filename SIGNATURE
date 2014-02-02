@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.68.
+signed via the Module::Signature module, version 0.73.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,31 +15,31 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 1e59c4e0bf7346ce61ecfbf85ad19e2db82ccedd Build.PL
-SHA1 b5802e248937bec1e5b107945759e541dc27b948 Changes
+SHA1 f30b3eeed6b592044464f4bf18c137d64fde6e73 Changes
 SHA1 d46f5a6c014854c812d4fa95acde3c2962442057 MANIFEST
 SHA1 7d20e4e840781030202bb045d5ab81b3fd1b68b0 MANIFEST.SKIP
-SHA1 f87dcfc89814f6166c4b759cdc09716d51756d18 META.json
-SHA1 93283a288477689167745a63316c6dad5501dc4c META.yml
+SHA1 5f801cccfd7c085f360df7133ac86a166b298d3f META.json
+SHA1 a326b035e74bf4be0239f333c983d7393ca2d8f9 META.yml
 SHA1 c743fae53ee75f79fdef1c5cb3e4efab4e286e5d Makefile.PL
 SHA1 192d998ae737b3c9728c2ee7a931930427d52d60 README
-SHA1 966856ef791f1babd920638d9680c6d89643eaac lib/WWW/Google/CustomSearch.pm
-SHA1 ca329d5f0720e23a7a34fad7f02c7ca2338f8127 lib/WWW/Google/CustomSearch/Item.pm
-SHA1 82e4e40b74fff2004d8d786c7e4bf7ceab82c57b lib/WWW/Google/CustomSearch/Page.pm
-SHA1 4e3262c784b30840d98c346293ce2d40026be740 lib/WWW/Google/CustomSearch/Request.pm
-SHA1 1407c947fc7624f6676695c9588b7f22e2c4b667 lib/WWW/Google/CustomSearch/Result.pm
+SHA1 5660b33fdf4950b63d8319d1fd61ea323c86048d lib/WWW/Google/CustomSearch.pm
+SHA1 afe8807d164f80997e1c4f87f12d407341937ef6 lib/WWW/Google/CustomSearch/Item.pm
+SHA1 904d1ff9ad435670788416b29b6ae40f9693863b lib/WWW/Google/CustomSearch/Page.pm
+SHA1 8f36c9c6bcfabcbaa1f6a015a98f3a94055853fa lib/WWW/Google/CustomSearch/Request.pm
+SHA1 e276ad5bc008924fa2c810abc31c75c8c10eca7e lib/WWW/Google/CustomSearch/Result.pm
 SHA1 de104277d16d275a2b6c95649097f3044df88842 t/00-load.t
-SHA1 4e49de1dab3a387df6bf7a8cb9530bbde283e309 t/01-new.t
+SHA1 7d37599dfa80baf394b2bdcb229294a735f228a7 t/01-new.t
 SHA1 9fa4ecf485997f1a0f3f2dd9b00fdae74af1af16 t/02-search.t
 SHA1 2b8ffb7e4f399af95d092743846ac8d438f2c53e t/manifest.t
 SHA1 0765c9ff0cc4319f415bb08d0053b7717a8284a2 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (MingW32)
 
-iQEcBAEBAgAGBQJQUuR7AAoJENoXJXWo7C/pt8gIAMEoa9/GBXLnIoTh5GnEcy+v
-LkWjJOF56em9mMdHi0ijfCdAXhWO5TBxBne2Zi2NraQotH6rnEbqva7QyaMy52VW
-9dzEC5KhoqrNm555xfio6BK2l6vs+jE51k3iSFTD8sUhn8dL9jztLq/6fWD+vsgI
-EibdWWOBBlD2yqIYir1gekPN/8ZWkO7K8XtEWAQfOnVd0qRMAHx3a3hXtDQ12I3x
-7m9MFd7vJb5mxJ/Ug0W5d0UO2IDc/hE8fKF6+DyB3b6opNvrwWuhfr20EL1q+zeO
-15YFBOThXqXAXA+uhSGSHvFve9FLIjF5gdhLhWGmhZlY5Bht1AOmz/tikxFXD0o=
-=GEt7
+iQEcBAEBAgAGBQJS7pPVAAoJENoXJXWo7C/pVnwH/RasJu/BDTdV6ufTSjg8cHnZ
+CEsz5dZeTd2UE7eFzYj0vNANLpXaLhFDGX/8Y8WhDunwhLCj3Khf8JOpIbOEs8Xx
+aF8QJJa7p2VHO4OVCygEU3mRZRZjLB3DzVfVapfJhyNKTEI+hOfiWyOb/m7VyN/T
+RxBtr5RjPIWJxe6Vu/hKycf36UkXs/pVZeq4x5RBet5ugOLsVYsncXWoXfTgW7sn
+HfuhAU7soeLNE5MIlaOnp8FSQeFLg3d1tNLyGygSAfEQgatDLaQpYzTMJTr5pKad
+4ZrACG4+XAkUW1gcftQIFGbRSNq2rdbJVTSQUfhQPWR2cMyJTCx5mCfIYgJ5TNE=
+=MYT4
 -----END PGP SIGNATURE-----

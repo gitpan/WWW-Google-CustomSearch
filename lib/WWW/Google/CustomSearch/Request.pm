@@ -12,11 +12,11 @@ WWW::Google::CustomSearch::Request - Placeholder for Google JSON/Atom Custom Sea
 
 =head1 VERSION
 
-Version 0.09
+Version 0.10
 
 =cut
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 has 'page'    => (is => 'ro', isa => 'WWW::Google::CustomSearch::Page');
 has 'api_key' => (is => 'ro', isa => 'Str', required => 1);
