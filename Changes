@@ -1,5 +1,8 @@
 Revision history for WWW-Google-CustomSearch
 
+0.11    Sat Mar 01 11:12:13 2014
+        - Added link to the Google JSON/Atom Custom Search API in the pod.
+
 0.10    Sun Feb 02 17:15:10 2014
         - Fixed the issue raised by JACINTA (RT: 92596)
 

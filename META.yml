@@ -25,19 +25,19 @@ name: WWW-Google-CustomSearch
 provides:
   WWW::Google::CustomSearch:
     file: lib/WWW/Google/CustomSearch.pm
-    version: 0.10
+    version: 0.11
   WWW::Google::CustomSearch::Item:
     file: lib/WWW/Google/CustomSearch/Item.pm
-    version: 0.10
+    version: 0.11
   WWW::Google::CustomSearch::Page:
     file: lib/WWW/Google/CustomSearch/Page.pm
-    version: 0.10
+    version: 0.11
   WWW::Google::CustomSearch::Request:
     file: lib/WWW/Google/CustomSearch/Request.pm
-    version: 0.10
+    version: 0.11
   WWW::Google::CustomSearch::Result:
     file: lib/WWW/Google/CustomSearch/Result.pm
-    version: 0.10
+    version: 0.11
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.10
+version: 0.11

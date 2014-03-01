@@ -740,11 +740,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.10
+Version 0.11
 
 =cut
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
@@ -759,6 +759,9 @@ Search API to retrieve Google Custom Search results programmatically.
 The  JSON / Atom Custom Search API  requires the use of an API key, which you can get from the
 Google APIs  console.  The API provides 100 search queries per day for free. If you need more,
 you may sign up for billing in the console.
+
+For more information about the Google JSON/Atom Custom Search API, please visit
+L<https://developers.google.com/custom-search/json-api/v1/reference/cse/list>
 
 Important:The version v1 of the Google JSON/Atom Custom Search API is in Labs and its features
 might change unexpectedly until it graduates.
