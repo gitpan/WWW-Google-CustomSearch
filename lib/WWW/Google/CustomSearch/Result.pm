@@ -14,11 +14,11 @@ WWW::Google::CustomSearch::Result - Placeholder for Google JSON/Atom Custom Sear
 
 =head1 VERSION
 
-Version 0.11
+Version 0.12
 
 =cut
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 has 'api_key' => (is => 'ro', isa => 'Str',     required => 1);
 has 'raw'     => (is => 'ro', isa => 'HashRef', required => 1);

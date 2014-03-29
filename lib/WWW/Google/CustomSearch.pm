@@ -740,11 +740,11 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.11
+Version 0.12
 
 =cut
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 Readonly my $API_VERSION => 'v1';
 Readonly my $BASE_URL    => "https://www.googleapis.com/customsearch/$API_VERSION";
@@ -1580,6 +1580,8 @@ are specified, C<cx> is used.
 
 =cut
 
+my $user_agent = \&_user_agent;
+
 type 'Language'          => where { exists($LANGUAGE->{lc($_)})           };
 type 'CountryCollection' => where { exists($COUNTRY_COLLECTION->{lc($_)}) };
 type 'FileType'          => where { exists($FILE_TYPE->{lc($_)})          };
@@ -1637,7 +1639,7 @@ has  'siteSearchFilter' => (is => 'ro', isa => 'SearchFilter');
 has  'sort'             => (is => 'ro', isa => 'Str');
 has  'start'            => (is => 'ro', isa => 'StartIndex',     default => 1);
 has  'alt'              => (is => 'ro', isa => 'OutputFormat',   default => 'json');
-has  'browser'          => (is => 'rw', isa => 'LWP::UserAgent', default => sub { return LWP::UserAgent->new(); });
+has  'browser'          => (is => 'rw', isa => 'LWP::UserAgent', default => $user_agent);
 
 around BUILDARGS => sub
 {
@@ -1756,6 +1758,13 @@ sub search
         $content = from_json($content);
     }
     return WWW::Google::CustomSearch::Result->new(raw => $content, api_key => $self->api_key);
+}
+
+sub _user_agent {
+    my $ua = LWP::UserAgent->new();
+    $ua->ssl_opts(verify_hostname => 0);
+
+    return $ua;
 }
 
 =head1 AUTHOR

@@ -13,11 +13,11 @@ WWW::Google::CustomSearch::Page - Placeholder for Google JSON/Atom Custom Search
 
 =head1 VERSION
 
-Version 0.11
+Version 0.12
 
 =cut
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 type 'SafetyLevel'    => where { /\bhigh\b|\bmedium\b|\boff\b/i };
 has  'api_key'        => (is => 'ro', isa => 'Str', required => 1);

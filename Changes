@@ -1,5 +1,8 @@
 Revision history for WWW-Google-CustomSearch
 
+0.12    Sat Mar 29 08:27:13 2014
+        - Added dependency check for LWP::Protocol::https v6.04 (RT: 94194).
+
 0.11    Sat Mar 01 11:12:13 2014
         - Added link to the Google JSON/Atom Custom Search API in the pod.
 
