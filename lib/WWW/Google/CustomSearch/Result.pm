@@ -1,12 +1,15 @@
 package WWW::Google::CustomSearch::Result;
 
-use Moose;
-use namespace::clean;
+$WWW::Google::CustomSearch::Result::VERSION = '0.13';
 
+use 5.006;
 use Data::Dumper;
-use WWW::Google::CustomSearch::Request;
-use WWW::Google::CustomSearch::Page;
 use WWW::Google::CustomSearch::Item;
+use WWW::Google::CustomSearch::Page;
+use WWW::Google::CustomSearch::Request;
+
+use Moo;
+use namespace::clean;
 
 =head1 NAME
 
@@ -14,32 +17,29 @@ WWW::Google::CustomSearch::Result - Placeholder for Google JSON/Atom Custom Sear
 
 =head1 VERSION
 
-Version 0.12
+Version 0.13
 
 =cut
 
-our $VERSION = '0.12';
+has 'api_key' => (is => 'ro',  required => 1);
+has 'raw'     => (is => 'ro',  required => 1);
 
-has 'api_key' => (is => 'ro', isa => 'Str',     required => 1);
-has 'raw'     => (is => 'ro', isa => 'HashRef', required => 1);
+has 'kind'                  => (is => 'ro');
+has 'formattedTotalResults' => (is => 'ro');
+has 'formattedSearchTime'   => (is => 'ro');
+has 'totalResults'          => (is => 'ro');
+has 'searchTime'            => (is => 'ro');
+has 'url_template'          => (is => 'ro');
+has 'url_type'              => (is => 'ro');
+has 'request'               => (is => 'ro');
+has 'nextPage'              => (is => 'ro');
+has 'previousPage'          => (is => 'ro');
+has 'items'                 => (is => 'ro');
 
-has 'kind'                  => (is => 'ro', isa => 'Str');
-has 'formattedTotalResults' => (is => 'ro', isa => 'Str');
-has 'formattedSearchTime'   => (is => 'ro', isa => 'Str');
-has 'totalResults'          => (is => 'ro', isa => 'Str');
-has 'searchTime'            => (is => 'ro', isa => 'Str');
-has 'url_template'          => (is => 'ro', isa => 'Str');
-has 'url_type'              => (is => 'ro', isa => 'Str');
-has 'request'               => (is => 'ro', isa => 'WWW::Google::CustomSearch::Request');
-has 'nextPage'              => (is => 'ro', isa => 'WWW::Google::CustomSearch::Page');
-has 'previousPage'          => (is => 'ro', isa => 'WWW::Google::CustomSearch::Page');
-has '_items'                => (is => 'ro', isa => 'ArrayRef[WWW::Google::CustomSearch::Item]');
+sub BUILD {
+    my ($self) = @_;
 
-sub BUILD
-{
-    my $self = shift;
     my $raw  = $self->raw;
-
     $self->{'kind'} = $raw->{'kind'};
     $self->{'formattedTotalResults'} = $raw->{'searchInformation'}->{'formattedTotalResults'};
     $self->{'formattedSearchTime'} = $raw->{'searchInformation'}->{'formattedSearchTime'};
@@ -63,7 +63,7 @@ sub BUILD
     }
 
     foreach (@{$raw->{items}}) {
-        push @{$self->{_items}}, WWW::Google::CustomSearch::Item->new($_);
+        push @{$self->{items}}, WWW::Google::CustomSearch::Item->new($_);
     }
 }
 
@@ -166,7 +166,8 @@ Returns the URL Type attribute of the search result.
 
 =head2 request()
 
-Returns the request L<WWW::Google::CustomSearch::Request> object used in the last search.
+Returns the request L<WWW::Google::CustomSearch::Request> object used in the last
+search.
 
     use strict; use warnings;
     use WWW::Google::CustomSearch;
@@ -179,8 +180,8 @@ Returns the request L<WWW::Google::CustomSearch::Request> object used in the las
 
 =head2 nextPage()
 
-Returns the next page L<WWW::Google::CustomSearch::Page> object which can be used to fetch the
-next page result.
+Returns the next page L<WWW::Google::CustomSearch::Page> object which can be used
+to fetch the next page result.
 
     use strict; use warnings;
     use WWW::Google::CustomSearch;
@@ -193,8 +194,8 @@ next page result.
 
 =head2 previousPage()
 
-Returns the previous page L<WWW::Google::CustomSearch::Page> object which can be used to fetch
-the previous page result.
+Returns the previous page L<WWW::Google::CustomSearch::Page> object which can  be
+used to fetch the previous page result.
 
     use strict; use warnings;
     use WWW::Google::CustomSearch;
@@ -207,7 +208,8 @@ the previous page result.
 
 =head2 items()
 
-Returns list of search item L<WWW::Google::CustomSearch::Item> based on the search criteria.
+Returns list of search item L<WWW::Google::CustomSearch::Item> based on the search
+criteria.
 
     use strict; use warnings;
     use WWW::Google::CustomSearch;
@@ -216,29 +218,18 @@ Returns list of search item L<WWW::Google::CustomSearch::Item> based on the sear
     my $cx      = 'Search_Engine_Identifier';
     my $engine  = WWW::Google::CustomSearch->new(api_key => $api_key, cx => $cx);
     my $result  = $engine->search("Google");
-    my $items   = $result->items; # ArrayRef
-    my @items   = $result->items; # Array
-
-=cut
-
-sub items {
-    my $self = shift;
-    return unless defined $self->{_items};
-    return @{$self->{_items}} if wantarray;
-    return $self->{_items};
-}
+    my $items   = $result->items;
 
 =head1 AUTHOR
-
 
 Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>
 
 =head1 BUGS
 
-Please report  any  bugs or feature requests to C<bug-www-google-customsearch at rt.cpan.org>,
-or through the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Google-CustomSearch>.
-I will be notified and then you'll automatically be notified of progress on your bug as I make
-changes.
+Please report  any  bugs  or feature requests to C<bug-www-google-customsearch at
+rt.cpan.org>, or through the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Google-CustomSearch>.
+I will be notified, and then you'll automatically be notified of progress on your
+bug as I make changes.
 
 =head1 SUPPORT
 
@@ -250,7 +241,7 @@ You can also look for information at:
 
 =over 4
 
-=item * RT: CPAN's request tracker
+=item * RT: CPAN's request tracker (report bugs here)
 
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Google-CustomSearch>
 
@@ -270,20 +261,42 @@ L<http://search.cpan.org/dist/WWW-Google-CustomSearch/>
 
 =head1 LICENSE AND COPYRIGHT
 
-This  program  is  free  software; you can redistribute it and/or modify it under the terms of
-either:  the  GNU  General Public License as published by the Free Software Foundation; or the
-Artistic License.
+Copyright 2014 Mohammad S Anwar.
 
-See http://dev.perl.org/licenses/ for more information.
+This  program  is  free software; you can redistribute it and/or modify it under
+the  terms  of the the Artistic License (2.0). You may obtain a copy of the full
+license at:
 
-=head1 DISCLAIMER
+L<http://www.perlfoundation.org/artistic_license_2_0>
 
-This  program  is  distributed  in  the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Any  use,  modification, and distribution of the Standard or Modified Versions is
+governed by this Artistic License.By using, modifying or distributing the Package,
+you accept this license. Do not use, modify, or distribute the Package, if you do
+not accept this license.
+
+If your Modified Version has been derived from a Modified Version made by someone
+other than you,you are nevertheless required to ensure that your Modified Version
+ complies with the requirements of this license.
+
+This  license  does  not grant you the right to use any trademark,  service mark,
+tradename, or logo of the Copyright Holder.
+
+This license includes the non-exclusive, worldwide, free-of-charge patent license
+to make,  have made, use,  offer to sell, sell, import and otherwise transfer the
+Package with respect to any patent claims licensable by the Copyright Holder that
+are  necessarily  infringed  by  the  Package. If you institute patent litigation
+(including  a  cross-claim  or  counterclaim) against any party alleging that the
+Package constitutes direct or contributory patent infringement,then this Artistic
+License to you shall terminate on the date that such litigation is filed.
+
+Disclaimer  of  Warranty:  THE  PACKAGE  IS  PROVIDED BY THE COPYRIGHT HOLDER AND
+CONTRIBUTORS  "AS IS'  AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED
+WARRANTIES    OF   MERCHANTABILITY,   FITNESS   FOR   A   PARTICULAR  PURPOSE, OR
+NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL LAW. UNLESS
+REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL,  OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE
+OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =cut
-
-__PACKAGE__->meta->make_immutable;
-no Moose; # Keywords are removed from the WWW::Google::CustomSearch::Result package
 
 1; # End of WWW::Google::CustomSearch::Result

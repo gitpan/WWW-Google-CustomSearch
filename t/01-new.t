@@ -2,87 +2,85 @@
 
 use strict; use warnings;
 use WWW::Google::CustomSearch;
-use Test::More tests => 27;
+use Test::More tests => 26;
 
 my $api_key = 'Your_API_Key';
+my $cx      = 'Search_Engine_Identifier';
 
-eval { WWW::Google::CustomSearch->new($api_key); };
+eval { WWW::Google::CustomSearch->new(api_key => $api_key); };
 like($@, qr/ERROR: cx or cref must be specified./);
 
 eval { WWW::Google::CustomSearch->new({api_key=>$api_key}); };
 like($@, qr/ERROR: cx or cref must be specified./);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, prettyprint=>'truue'}); };
-like($@, qr/Attribute \(prettyprint\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, prettyprint=>'truue'}); };
+like($@, qr/isa check for "prettyprint" failed/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, alt=>'jsoon'}); };
-like($@, qr/Attribute \(alt\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, lr=>'en'}); };
+like($@, qr/ERROR: Invalid data for param: lr/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, lr=>'en'}); };
-like($@, qr/Attribute \(lr\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, num=>12}); };
+like($@, qr/ERROR: Invalid data for param: num/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, num=>12}); };
-like($@, qr/Attribute \(num\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, start=>92}); };
+like($@, qr/ERROR: Invalid data for param: start/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, start=>92}); };
-like($@, qr/Attribute \(start\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, num=>0}); };
+like($@, qr/ERROR: Invalid data for param: num/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, num=>0}); };
-like($@, qr/Attribute \(num\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, start=>0}); };
+like($@, qr/ERROR: Invalid data for param: start/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, start=>0}); };
-like($@, qr/Attribute \(start\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, safe=>'on'}); };
+like($@, qr/ERROR: Invalid data for param: safe/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, safe=>'on'}); };
-like($@, qr/Attribute \(safe\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, filter=>-1}); };
+like($@, qr/isa check for "filter" failed/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, filter=>-1}); };
-like($@, qr/Attribute \(filter\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, c2coff=>-1}); };
+like($@, qr/isa check for "c2coff" failed/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, c2coff=>-1}); };
-like($@, qr/Attribute \(c2coff\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, cr=>'countryXYZ'}); };
+like($@, qr/ERROR: Invalid data for param: cr/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cr=>'countryXYZ'}); };
-like($@, qr/Attribute \(cr\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, dateRestrict=>'x1'}); };
+like($@, qr/ERROR: Invalid data for param: dateRestrict/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, dateRestrict=>'x1'}); };
-like($@, qr/Attribute \(dateRestrict\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, fileType=>'.xxx'}); };
+like($@, qr/ERROR: Invalid data for param: fileType/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, fileType=>'.xxx'}); };
-like($@, qr/Attribute \(fileType\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, gl=>'xy'}); };
+like($@, qr/ERROR: Invalid data for param: gl/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, gl=>'xy'}); };
-like($@, qr/Attribute \(gl\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, highRange=>'x'}); };
+like($@, qr/ERROR: Invalid data for param: highRange/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, highRange=>'x'}); };
-like($@, qr/Attribute \(highRange\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, hl=>'xyz'}); };
+like($@, qr/ERROR: Invalid data for param: hl/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, hl=>'xyz'}); };
-like($@, qr/Attribute \(hl\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, imgColorType=>'xyz'}); };
+like($@, qr/ERROR: Invalid data for param: imgColorType/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, imgColorType=>'xyz'}); };
-like($@, qr/Attribute \(imgColorType\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, imgDominantColor=>'xyz'}); };
+like($@, qr/ERROR: Invalid data for param: imgDominantColo/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, imgDominantColor=>'xyz'}); };
-like($@, qr/Attribute \(imgDominantColor\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, imgSize=>'xyz'}); };
+like($@, qr/ERROR: Invalid data for param: imgSize/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, imgSize=>'xyz'}); };
-like($@, qr/Attribute \(imgSize\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, imgType=>'xyz'}); };
+like($@, qr/ERROR: Invalid data for param: imgType/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, imgType=>'xyz'}); };
-like($@, qr/Attribute \(imgType\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, lowRange=>'x'}); };
+like($@, qr/ERROR: Invalid data for param: lowRange/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, lowRange=>'x'}); };
-like($@, qr/Attribute \(lowRange\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, lr=>'x'}); };
+like($@, qr/ERROR: Invalid data for param: lr/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, lr=>'x'}); };
-like($@, qr/Attribute \(lr\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, rights=>'x'}); };
+like($@, qr/ERROR: Invalid data for param: rights/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, rights=>'x'}); };
-like($@, qr/Attribute \(rights\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, searchType=>'x'}); };
+like($@, qr/ERROR: Invalid data for param: searchType/);
 
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, searchType=>'x'}); };
-like($@, qr/Attribute \(searchType\) does not pass the type constraint/);
-
-eval { WWW::Google::CustomSearch->new({api_key=>$api_key, siteSearchFilter=>'x'}); };
-like($@, qr/Attribute \(siteSearchFilter\) does not pass the type constraint/);
+eval { WWW::Google::CustomSearch->new({api_key=>$api_key, cx => $cx, siteSearchFilter=>'x'}); };
+like($@, qr/ERROR: Invalid data for param: siteSearchFilter/);

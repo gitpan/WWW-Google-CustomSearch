@@ -1,20 +1,20 @@
 Build.PL
 Changes
+lib/WWW/Google/CustomSearch.pm
+lib/WWW/Google/CustomSearch/Item.pm
+lib/WWW/Google/CustomSearch/Page.pm
+lib/WWW/Google/CustomSearch/Params.pm
+lib/WWW/Google/CustomSearch/Request.pm
+lib/WWW/Google/CustomSearch/Result.pm
+Makefile.PL
 MANIFEST
 MANIFEST.SKIP
 SIGNATURE
-Makefile.PL
 README
-lib/WWW/Google/CustomSearch.pm
-lib/WWW/Google/CustomSearch/Result.pm
-lib/WWW/Google/CustomSearch/Request.pm
-lib/WWW/Google/CustomSearch/Page.pm
-lib/WWW/Google/CustomSearch/Item.pm
 t/00-load.t
 t/01-new.t
 t/02-search.t
 t/manifest.t
 t/pod.t
-META.yml
-META.json
-SIGNATURE    Added here by Module::Build
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)
