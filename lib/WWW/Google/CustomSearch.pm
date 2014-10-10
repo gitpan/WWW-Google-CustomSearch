@@ -1,10 +1,11 @@
 package WWW::Google::CustomSearch;
 
-$WWW::Google::CustomSearch::VERSION = '0.18';
+$WWW::Google::CustomSearch::VERSION = '0.19';
 
 use 5.006;
 use JSON;
 use Data::Dumper;
+use URI;
 
 use WWW::Google::UserAgent;
 use WWW::Google::UserAgent::DataTypes qw($XmlOrJson $TrueOrFalse $ZeroOrOne);
@@ -61,7 +62,7 @@ WWW::Google::CustomSearch - Interface to Google JSON/Atom Custom Search.
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -910,7 +911,7 @@ can be used to probe for further information about the search result.
     my $api_key = 'Your_API_Key';
     my $cx      = 'Search_Engine_Identifier';
     my $engine  = WWW::Google::CustomSearch->new(api_key=>$api_key, cx=>$cx, start=>2);
-    my $result  = $engine1->search('Google');
+    my $result  = $engine->search('Google');
 
 =cut
 
@@ -943,19 +944,26 @@ sub _validate {
 sub _url {
     my ($self, $query) = @_;
 
-    my $url = sprintf("%s?key=%s&q=%s", $BASE_URL, $self->api_key, $query);
+    my $url = URI->new($BASE_URL);
+    my $params = {
+        'key' => $self->api_key,
+        'q'   => $query,
+    };
+
     if (($self->cx) || ($self->cx && $self->cref)) {
-        $url .= sprintf("&cx=%s", $self->cx);
+        $params->{'cx'} = $self->cx;
     }
     elsif ($self->cref) {
-        $url .= sprintf("&cref=%s", $self->cref);
+        $params->{'cref'} = $self->cref;
     }
 
-    foreach my $key (keys %$FIELDS) {
+    foreach my $key (keys %{$FIELDS}) {
         next unless defined $self->{$key};
-        my $_key = "&$key=%" . $FIELDS->{$key}->{type};
-        $url .= sprintf($_key, $self->{$key}) if defined $self->{$key};
+        my $value_template = sprintf('%%%s', $FIELDS->{$key}->{type});
+        $params->{$key} = sprintf($value_template, $self->{$key});
     }
+
+    $url->query_form($params);
 
     return $url;
 }
@@ -967,6 +975,10 @@ Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>
 =head1 REPOSITORY
 
 L<https://github.com/Manwar/WWW-Google-CustomSearch>
+
+=head1 CONTRIBUTORS
+
+David-Kitcher Jones (m4ddav3)
 
 =head1 BUGS
 
