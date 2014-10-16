@@ -16,4 +16,4 @@ no_index:
     - inc
 resources:
   repository: https://github.com/Manwar/WWW-Google-CustomSearch.git
-version: '0.20'
+version: '0.21'
